@@ -4,7 +4,6 @@ import TableStyled from "./Table.styled";
 const Table = () => {
   const [tableData, setTableData] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
-
   useEffect(() => {
     fetch(
       "https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=TCEOEHW0Z8V197EW"
@@ -25,8 +24,6 @@ const Table = () => {
       .catch((error) => setErrorMessage(error.message));
   }, []);
 
-  console.log("rendering table");
-
   return (
     <TableStyled>
       <table className="table">
@@ -44,15 +41,16 @@ const Table = () => {
           <div className="errorMessage">{errorMessage}</div>
         ) : (
           <tbody>
-            {Object.keys(tableData).map((dateTime, index) => {
+            {Object.entries(tableData).map((dateTime, index) => {
+              const [dateAndTime, obj] = dateTime;
               return (
                 <tr key={index}>
-                  <td>{dateTime}</td>
-                  <td>{tableData[dateTime]["1. open"]}</td>
-                  <td>{tableData[dateTime]["2. high"]}</td>
-                  <td>{tableData[dateTime]["3. low"]}</td>
-                  <td>{tableData[dateTime]["4. close"]}</td>
-                  <td>{tableData[dateTime]["5. volume"]}</td>
+                  <td>{dateAndTime}</td>
+                  <td>{obj["1. open"]}</td>
+                  <td>{obj["2. high"]}</td>
+                  <td>{obj["3. low"]}</td>
+                  <td>{obj["4. close"]}</td>
+                  <td>{obj["5. volume"]}</td>
                 </tr>
               );
             })}

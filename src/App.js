@@ -1,9 +1,12 @@
-import Table from "./Components/table/Table";
+import React from "react";
+const LazyTable = React.lazy(() => import("./Components/table/Table"));
 
 function App() {
   return (
     <div className="App">
-      <Table />
+      <React.Suspense fallback={"Loading table..."}>
+        <LazyTable />
+      </React.Suspense>
     </div>
   );
 }
